@@ -1,12 +1,16 @@
-var selected_city = 'KC'
-
 $(document).ready(function() {
 
-    // select city
-    d3.selectAll(".select-city").on("change", select_city);
+    // autoload dashboard at startup
+    var dashboard_fragment = "/templates/page-dashboard.html#page-content";
+    $("#page-content").load(dashboard_fragment, function() {
+        calculate_dashboard();
+    });
 
+    // load page in the page-content div when clicked
+    $(".page-link").click(function(e) {
+        e.preventDefault();
+        $("#page-content").load($(this).attr('href'));
+     });
+   
 });
 
-function select_city(d) {
-    console.log(d.value, " ", d3.event);
-}

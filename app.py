@@ -1,27 +1,72 @@
 from flask import Flask, render_template, jsonify, redirect, request, send_from_directory
-from flask_pymongo import PyMongo
 from lxml import html
-from bs4 import BeautifulSoup
-from sys import platform
-from splinter import Browser
+from bs4 import BeautifulSoup as bs
 
 import requests
-import unicodecsv as csv
-import argparse
+import json
+import pymongo
+from bson.json_util import dumps
 
-
-   
 app = Flask(__name__)
-mongo = PyMongo(app)
 
+# search for house for sale in the provided city 
+# example kansas-city_rb, overland-park_rb
+def get_zillow_data(city):
 
+    # use Mongo db   
+    conn = 'mongodb://localhost:27017'
+    client = pymongo.MongoClient(conn)
+    db = client.zillow
+    collection = db.listings
+    # remove old zillow data
+    collection.drop()
+    collection = db.listings
 
-def zillow_data():
-    city = "Kansas City"
-    api_key = "X1-ZWz1gd7cng5897_634pb"
-    queryURL = "http://www.zillow.com/webservice/GetZestimate.htm&zws-id=" + api_key;
-    return api_key
+    # set valid request headers
+    req_headers = {
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'en-US,en;q=0.8',
+        'upgrade-insecure-requests': '1',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+    }
 
+    # get data from this url
+    with requests.Session() as s:
+        url = 'https://www.zillow.com/homes/for_sale/' + city + '/?fromHomePage=true&shouldFireSellPageImplicitClaimGA=false&fromHomePageTab=buy'
+        r = s.get(url, headers=req_headers)
+        # display return code 200=good
+        print(r)
+
+    # scrape the content 
+    soup = bs(r.content, 'lxml')
+    price = soup.find_all('span', {'class': 'zsg-photo-card-price'})
+    info = soup.find_all('span', {'class': 'zsg-photo-card-info'})
+    address = soup.find_all('span', {'itemprop': 'address'})
+        
+    listing_str = ""
+    count = 0
+    for index, value in enumerate(price):
+        # build the row
+        each_listing = {"price": value.text, "info": info[index].text, "address": address[index].text}
+        # write each row to the Mongo db        
+        collection.insert_one(each_listing)
+        # accumulate listings received
+        print(type(each_listing))
+
+        to_str = ''.join('{}{}'.format(key, val) for key, val in each_listing.items())     
+        listing_str = listing_str + to_str
+        
+        # accumulate listing count
+        count = count + 1
+
+        print(each_listing)
+        
+    #display number of listing
+    print(count)
+    print(listing_str)
+
+    return listing_str
 
 
 @app.route("/")
@@ -29,14 +74,12 @@ def home():
     return send_from_directory("templates", "index.html")
 
 
+#get new zillow data
 @app.route("/zillow")
 def get_zillow():
-    mongo.db.zillow.drop()
-    listings = mongo.db.zillow    
-    listings_data = {}
-    for listing in listings_data:
-        listings.insert_one(listing)
-    return redirect("/templates/page-housing.html#page-content", code=302)
+    city = "kansas-city_rb"
+    return get_zillow_data(city)
+
 
 # build data for the plotly line chart of Zillow housing data
 @app.route("/line")

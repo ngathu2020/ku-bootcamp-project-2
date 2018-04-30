@@ -53,3 +53,6 @@ body {
   height: 30px;
 }
 
+.dropdown-menu a {
+  color: grey !important;
+}

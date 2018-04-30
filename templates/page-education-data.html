@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>School Information</title>
+
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js" type="text/javascript" charset="utf8"></script>
+
+</head>
+
+<body>
+    <!-- content box -->
+    <div id="page-content" class="box">
+
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped table-inverse" id="myTable">
+            <thead>
+              <tr>
+                <th>School District</th>
+                <th>County</th>
+                <th>Steet Address</th>
+                <th>City</th>
+                <th>Zip</th>
+                <th>Locale</th>
+                <th>Student Teacher Ration</th>
+                <th>School Type</th>
+                <th>Graduation Rate</th>
+                <th>Proficiency Reading</th>
+                <th>Advanced Proficiency Reading</th>
+                <th>Proficiency Math</th>
+                <th>Advanced Proficiency Math</th>
+                <th>Proficiency Science</th>
+                <th>Advanced Proficiency Science</th>
+                <th>Proficiency Social</th>
+                <th>Advanced Proficiency Social</th>
+              </tr>
+            </thead>
+            <tbody id="myTableBody"></tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>jQuery('#myTable'.ddTableFilter());</script>
+    <script src="/js/education.js" type="text/javascript"></script>
+
+</body>
+
+</html>

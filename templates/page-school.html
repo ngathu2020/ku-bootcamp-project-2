@@ -1,44 +1,51 @@
 <!DOCTYPE html>
-<html lang="en-us">
+
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <meta http-equiv="Pragma" content="no-cache"/>
-  <meta http-equiv="Expires" content="0"/>
-  <title>School Information</title> 
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="/css/school.css">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://unpkg.com/simple-statistics@5.0.0/dist/simple-statistics.min.js"></script>
+
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="jumbotron text-center">
-      <h1>Missouri</h1>
-      <br>
-      <h1>Kansas City Area Schools</br>
-      </h1>
-     </div>
+  <div class="jumbotron text-center">
+ 
+    <h1>Kansas City Area Schools
+    </h1>
+
   </div>
-  <div class="col-md-6"></div>
-  <!-- save for bar chart, change myTable to col-mid-6 and edit data table to remove proficiency scores-->
-  
-  </div>
-  
   <div class="row">
-    <div class="col-md-8">
-      <table class=table "table-striped"  id="myTable">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+        
+                <h2>School District Boundaries</h2>
+      
+        </div>
+        <div class="schoolmap">
+          <h4>School districts often cross city and county boundaries. <br>
+          Click on map to explore current school boundaries</h4></br>
+          <a href="javascript:popUpWindow('https://kudataanalytics.maps.arcgis.com/home/webmap/viewer.html?webmap=4f512b39431a400b97fe711de9f9e5dc','schoolmap','700','600')">
+            <img src="schoolmap.PNG" alt="ARCis" style="width:300px;height:300px;"></a>
+      </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class=table "table-striped table-inverse" id="myTable">
         <thead>
           <tr>
             <th>School District</th>
@@ -62,21 +69,20 @@
         </thead>
         <tbody id="myTableBody">
         </tbody>
-        
+
       </table>
-    
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
       <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
       <!-- <script src="MoDataSet.csv" type="text/javascript"></script> -->
-      <script src="/js/school.js" type="text/javascript"></script>
+      <script src="Missouri.js" type="text/javascript"></script>
       <script src="ddtf.js" type="text/javascript"></script>
       <script>
         jQuery('#myTable'.ddTableFilter());
       </script>
-     
+
 </body>
 
 </html>
- 

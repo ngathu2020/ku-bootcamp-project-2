@@ -1,6 +1,6 @@
 var $tbody = document.querySelector("#myTableBody");
 
-d3.csv("MoDataSet.csv", function (error, MoDataSet) {
+d3.csv("/data/MoDataSet.csv", function (error, MoDataSet) {
     if (error) throw error;
     console.log(MoDataSet);
     console.log([error])

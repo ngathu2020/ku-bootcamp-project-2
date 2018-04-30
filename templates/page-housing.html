@@ -1,34 +1,60 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta http-equiv="Expires" content="0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Housing Information</title> 
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="/css/housing.css">
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/h.css">
+
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
-
     <!-- content box -->
-    <div id="page-content">
+    <div id="page-content" class="box">
 
         <!-- line chart -->
-        <div class="line">line chart here...</div>
+        <div id="plot-line"></div>
 
-        <!-- heat map -->
-        <div class="heatmap">heat map here</div>
+        <script>
+
+            var api_key = "X1-ZWz1gd7cng5897_634pb"
+            var queryURL = "http://www.zillow.com/webservice/GetZestimate.htm&zws-id=" + api_key;
+
+            // display zillow data
+            // var zillow_data = "/zillo";
+            // $("#page-content").load(zillow_data);
+
+            Plotly.d3.json('/line', function(error, data){
+              if (error) return console.warn(error);
+        
+              var layout = { margin: { t: 0 } }
+              var line_data = document.getElementById('plot-line');
+              Plotly.plot(line_data, data);
+            })
+        </script>
+
+            <!-- heat map -->
+        <!-- <div class="heatmap">heat map here</div> -->
+
+        <!-- Craigslist Listings -->
+        <!-- <div class="row">
+            <ul class="list-group">
+              {% for listing in listings %}
+              <li class='list-group-item'>
+                <a href="{{listing.link}}">{{ listing.title }}: {{ listing.price }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+        </div> -->
 
     </div>
-
-<script src="/js/housing.js" type="text/javascript"></script> 
-
+  
 </body>
+</html>

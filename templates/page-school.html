@@ -6,82 +6,80 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+
+  <title>School Information</title>
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://unpkg.com/simple-statistics@5.0.0/dist/simple-statistics.min.js"></script>
-
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js" type="text/javascript" charset="utf8"></script>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="jumbotron text-center">
- 
-    <h1>Kansas City Area Schools
-    </h1>
+    <!-- content box -->
+    <div id="page-content" class="box">
 
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-        
-                <h2>School District Boundaries</h2>
-      
+      <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+            
+                    <h2>School District Boundaries</h2>
+          
+            </div>
+            <div class="schoolmap">
+              <h4>School districts often cross city and county boundaries. <br>
+              Click on map to explore current school boundaries</h4></br>
+              <a href="javascript:popUpWindow('https://kudataanalytics.maps.arcgis.com/home/webmap/viewer.html?webmap=4f512b39431a400b97fe711de9f9e5dc','schoolmap','700','600')">
+                <img src="schoolmap.PNG" alt="ARCis" style="width:300px;height:300px;">
+              </a>
+            </div>
         </div>
-        <div class="schoolmap">
-          <h4>School districts often cross city and county boundaries. <br>
-          Click on map to explore current school boundaries</h4></br>
-          <a href="javascript:popUpWindow('https://kudataanalytics.maps.arcgis.com/home/webmap/viewer.html?webmap=4f512b39431a400b97fe711de9f9e5dc','schoolmap','700','600')">
-            <img src="schoolmap.PNG" alt="ARCis" style="width:300px;height:300px;"></a>
       </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <table class=table "table-striped table-inverse" id="myTable">
-        <thead>
-          <tr>
-            <th>School District</th>
-            <th>County</th>
-            <th>Steet Address</th>
-            <th>City</th>
-            <th>Zip</th>
-            <th>Locale</th>
-            <th>Student Teacher Ration</th>
-            <th>School Type</th>
-            <th>Graduation Rate</th>
-            <th>Proficiency Reading</th>
-            <th>Advanced Proficiency Reading</th>
-            <th>Proficiency Math</th>
-            <th>Advanced Proficiency Math</th>
-            <th>Proficiency Science</th>
-            <th>Advanced Proficiency Science</th>
-            <th>Proficiency Social</th>
-            <th>Advanced Proficiency Social</th>
-          </tr>
-        </thead>
-        <tbody id="myTableBody">
-        </tbody>
+      <div class="row">
+        <div class="col-md-12">
+          <table class=table "table-striped table-inverse" id="myTable">
+            <thead>
+              <tr>
+                <th>School District</th>
+                <th>County</th>
+                <th>Steet Address</th>
+                <th>City</th>
+                <th>Zip</th>
+                <th>Locale</th>
+                <th>Student Teacher Ration</th>
+                <th>School Type</th>
+                <th>Graduation Rate</th>
+                <th>Proficiency Reading</th>
+                <th>Advanced Proficiency Reading</th>
+                <th>Proficiency Math</th>
+                <th>Advanced Proficiency Math</th>
+                <th>Proficiency Science</th>
+                <th>Advanced Proficiency Science</th>
+                <th>Proficiency Social</th>
+                <th>Advanced Proficiency Social</th>
+              </tr>
+            </thead>
+            <tbody id="myTableBody"></tbody>
 
-      </table>
+          </table>
+        </div>
+      </div>
+    </div>
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-      <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-      <!-- <script src="MoDataSet.csv" type="text/javascript"></script> -->
-      <script src="school.js" type="text/javascript"></script>
-      <script src="ddtf.js" type="text/javascript"></script>
-      <script>
-        jQuery('#myTable'.ddTableFilter());
-      </script>
+    <script src="school.js" type="text/javascript"></script>
+    <script src="ddtf.js" type="text/javascript"></script>
 
 </body>
 

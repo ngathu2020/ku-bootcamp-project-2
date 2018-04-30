@@ -1,3 +1,5 @@
+jQuery('#myTable'.ddTableFilter());
+
 var $tbody = document.querySelector("#myTableBody");
 
 d3.csv("MoDataSet.csv", function (error, MoDataSet) {

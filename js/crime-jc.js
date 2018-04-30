@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
-    document.getElementById("map").innerHTML = "";
+    document.getElementById("jc-map").innerHTML = "";
 
     'use strict';
-    var jc_myMap = L.map('map', {
+    var jc_myMap = L.map('jc-map', {
       center: [39.0997, -94.5786],
       zoom: 11
     });

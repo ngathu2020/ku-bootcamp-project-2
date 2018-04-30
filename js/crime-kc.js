@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
-    document.getElementById("map").innerHTML = "";
+    document.getElementById("kc-map").innerHTML = "";
 
-    var kc_myMap = L.map('map', {
+    var kc_myMap = L.map('kc-map', {
         center: [39.0997, -94.5786],
         zoom: 11
     });

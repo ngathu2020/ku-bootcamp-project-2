@@ -13,16 +13,16 @@
 
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/crime.css">
+    <link rel="stylesheet" href="/css/education.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/housing.css">
-    <link rel="stylesheet" href="/css/recreation.css">
+    <link rel="stylesheet" href="/css/area.css">
   
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js" type="text/javascript" charset="utf8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
     <script src="https://unpkg.com/simple-statistics@5.0.0/dist/simple-statistics.min.js"></script>
@@ -49,14 +49,22 @@
         <ul class="nav navbar-nav">
           <li><a class="page-link" href="/templates/page-dashboard.html#page-content">Dashboard</a></li>
 
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Area Information<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="page-link" href="/templates/page-area-city.html#page-content">City</a></li>
+              <li><a class="page-link" href="/templates/page-area-county.html#page-content">County</a></li>
+              <li><a class="page-link" href="/templates/page-area-pop.html#page-content">Population</a></li>
+              <li><a class="page-link" href="/templates/page-area-park.html#page-content">Parks</a></li>
+              <li><a class="page-link" href="/templates/page-area-recreation.html#page-content">Recreation</a></li>
+            </ul>
+          </li>
+
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Education<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a class="page-link" href="/templates/page-education-map.html#page-content">School Map</a></li>
               <li><a class="page-link" href="/templates/page-education-data.html#page-content">School Data</a></li>
             </ul>
           </li>
-
-          <li><a class="page-link" href="/templates/page-housing.html#page-content">Housing</a></li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Crime<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -65,7 +73,8 @@
             </ul>
           </li>
 
-          <li><a class="page-link" href="/templates/page-recreation.html#page-content">Recreation</a></li>
+          <li><a class="page-link" href="/templates/page-housing.html#page-content">Housing</a></li>
+
         </ul>
       </div>
     </nav>

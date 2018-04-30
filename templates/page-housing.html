@@ -17,38 +17,6 @@
         <!-- line chart -->
         <div id="plot-line"></div>
 
-        <script>
-
-            var api_key = "X1-ZWz1gd7cng5897_634pb"
-            var queryURL = "http://www.zillow.com/webservice/GetZestimate.htm&zws-id=" + api_key;
-
-            // display zillow data
-            // var zillow_data = "/zillo";
-            // $("#page-content").load(zillow_data);
-
-            Plotly.d3.json('/line', function(error, data){
-              if (error) return console.warn(error);
-        
-              var layout = { margin: { t: 0 } }
-              var line_data = document.getElementById('plot-line');
-              Plotly.plot(line_data, data);
-            })
-        </script>
-
-            <!-- heat map -->
-        <!-- <div class="heatmap">heat map here</div> -->
-
-        <!-- Craigslist Listings -->
-        <!-- <div class="row">
-            <ul class="list-group">
-              {% for listing in listings %}
-              <li class='list-group-item'>
-                <a href="{{listing.link}}">{{ listing.title }}: {{ listing.price }}</a>
-              </li>
-              {% endfor %}
-            </ul>
-        </div> -->
-
     </div>
   
 </body>

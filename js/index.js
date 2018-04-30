@@ -14,3 +14,9 @@ $(document).ready(function() {
    
 });
 
+function popUpWindow(URL, windowName, windowWidth, windowHeight) {
+    var centerLeft = (screen.width/2)-(windowWidth/2);
+    var centerTop = (screen.height/2)-(windowHeight/2);
+    var windowFeatures = 'toolbar=no, location=no, directories=no, status=no, menubar=no, titlebar=no, scrollbars=no, resizable=yes, ';
+    return window.open(URL, windowName, windowFeatures +' width='+ windowWidth +', height='+ windowHeight +', top='+ centerTop +', left='+ centerLeft);
+   }

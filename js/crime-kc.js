@@ -1,4 +1,3 @@
-$(document).ready(function() {
 
     document.getElementById("kc-map").innerHTML = "";
 
@@ -30,4 +29,3 @@ $(document).ready(function() {
         }).addTo(kc_myMap)
 
     });
-})

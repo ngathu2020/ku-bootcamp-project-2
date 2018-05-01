@@ -1,3 +1,4 @@
-#kc-map #jc-map .page-content {
-    height: 100%;
-}
+#map #kc-map #jc-map .page-content #page-content{
+    height: 500px !important;
+    width: 100% !important;
+} 

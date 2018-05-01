@@ -7,9 +7,8 @@
     <meta http-equiv="Expires" content="0"/>
     <title>Kansas City Metropolitan Explorer</title> 
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 
     <link rel="stylesheet" href="/css/index.css">
   
@@ -25,7 +24,6 @@
     <script src="/js/leaflet-heat.js"></script>
     <script src="/js/ddtf.js"></script>
       
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
@@ -42,33 +40,33 @@
       </div>
       <div class="second-nav">
         <ul class="nav navbar-nav">
-          <li><a class="page-link" href="/templates/page-dashboard.html#page-content">Dashboard</a></li>
+          <li><a class="page-link" href="/templates/page-dashboard-25.html#page-content">Dashboard</a></li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Area Information<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a class="page-link" href="/templates/page-area-city.html#page-content">City</a></li>
-              <li><a class="page-link" href="/templates/page-area-county.html#page-content">County</a></li>
-              <li><a class="page-link" href="/templates/page-area-pop.html#page-content">Population</a></li>
-              <li><a class="page-link" href="/templates/page-area-park.html#page-content">Parks</a></li>
-              <li><a class="page-link" href="/templates/page-area-recreation.html#page-content">Recreation</a></li>
+              <!-- <li><a class="page-link" href="/templates/page-area-city.html#page-content">City</a></li>
+              <li><a class="page-link" href="/templates/page-area-county.html#page-content">County</a></li> -->
+              <li><a class="page-link" href="/templates/page-area-pop-23.html#page-content">Population</a></li>
+              <li><a class="page-link" href="/templates/page-area-park-23.html#page-content">Parks</a></li>
+              <li><a class="page-link" href="/templates/page-area-recreation-23.html#page-content">Recreation</a></li>
             </ul>
           </li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Education<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a class="page-link" href="/templates/page-education-map.html#page-content">School Map</a></li>
-              <li><a class="page-link" href="/templates/page-education-data.html#page-content">School Data</a></li>
+              <li><a class="page-link" href="/templates/page-education-map-23.html#page-content">School Map</a></li>
+              <li><a class="page-link" href="/templates/page-education-data-23.html#page-content">School Data</a></li>
             </ul>
           </li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Crime<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a class="page-link" href="/templates/page-crime-kc.html#page-content">Kansas City</a></li>
-              <li><a class="page-link" href="/templates/page-crime-jc.html#page-content">Johnson County</a></li>
+              <li><a class="page-link" href="/templates/page-crime-kc-23.html#page-content">Kansas City</a></li>
+              <li><a class="page-link" href="/templates/page-crime-jc-23.html#page-content">Johnson County</a></li>
             </ul>
           </li>
 
-          <li><a class="page-link" href="/templates/page-housing.html#page-content">Housing</a></li>
+          <li><a class="page-link" href="/templates/page-housing-24.html#page-content">Housing</a></li>
 
         </ul>
       </div>
@@ -81,16 +79,19 @@
         $(document).ready(function() {
 
             // autoload dashboard at startup
-            var dashboard_fragment = "/templates/page-dashboard2.html#page-content";
-            $("#page-content").load(dashboard_fragment, function() {
-                $("#school_year").text("2016");
-                $("#graduation_rate").text("85%");
-                $("#recreation_year").text("2016");
-                $("#public_park_count").text("5,120");
-                $("#existing_house_year").text("2016");
-                $("#for_sale_count").text("120,000");
-                $("#incident_year").text("2016");
-                $("#incident_count").text("150,000");
+            d3.json("/dashboard", function(data) {
+                console.log("grad rate " + data)
+                var dashboard_fragment = "/templates/page-dashboard-25.html#page-content";
+                $("#page-content").load(dashboard_fragment, function() {
+                    $("#school_year").text("2016");
+                    $("#graduation_rate").text(data);
+                    $("#recreation_year").text("2016");
+                    $("#public_park_count").text("???");
+                    $("#existing_house_year").text("2016");
+                    $("#for_sale_count").text("???");
+                    $("#incident_year").text("2016");
+                    $("#incident_count").text("???");
+                });
             });
 
             // load page in the page-content div when clicked

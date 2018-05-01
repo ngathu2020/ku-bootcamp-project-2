@@ -1,11 +1,17 @@
 from flask import Flask, render_template, jsonify, redirect, request, send_from_directory
 from lxml import html
 from bs4 import BeautifulSoup as bs
+from bson.json_util import dumps
 
 import requests
 import json
 import pymongo
-from bson.json_util import dumps
+import pandas as pd
+import numpy as np
+import csv
+import os
+import io
+
 
 app = Flask(__name__)
 
@@ -69,9 +75,27 @@ def get_zillow_data(city):
     return listing_str
 
 
+# calculate KC graduation rate in 2016
+def get_graduation_rate():
+    csv_path = os.path.join("data", "KCDataSet.csv")
+    kcdata = pd.read_csv(csv_path)
+    kcdata = kcdata.replace(0, np.NaN)
+    graduation_rate = kcdata["Graduation Rate"].mean()
+    rate = "%.2f" % round(graduation_rate,2)
+    return rate
+
+
+
+# home page
 @app.route("/")
 def home():
     return send_from_directory("templates", "index.html")
+
+
+# get graduation rate for the dashboard
+@app.route("/dashboard")
+def dashboard_data():
+    return get_graduation_rate()
 
 
 #get new zillow data
@@ -84,9 +108,19 @@ def get_zillow():
 # build data for the plotly line chart of Zillow housing data
 @app.route("/line")
 def get_line_data():
-    data = [{
-        "x": [1, 2, 3, 4, 5],
-        "y": [1, 2, 4, 8, 16] }]
+    data = {
+        x: [1, 2, 3, 4],
+        y: [10, 15, 13, 17]
+    }
+
+    # var line2 = {
+    #     x: [1, 2, 3, 4],
+    #     y: [16, 5, 11, 9],
+    #     type: 'scatter'
+    # }
+
+    # var data = [line1, line2]
+
     return jsonify(data)
 
 

@@ -17,7 +17,8 @@
             <div class="col-md-3">
                 <p class="count-label">Graduation Rate in <span id="school_year"></span></p> 
                 <br>
-                <p id="graduation_rate" class="count"></p>
+                <span id="graduation_rate" class="count"></span>
+                <span class="count">%</span>
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-3">
@@ -45,30 +46,19 @@
             </div>
             <div class="col-md-2"></div>
         </div>
+
+        <script>
+            d3.json("/dashboard", function(data) {
+                $("#school_year").text("2016");
+                $("#graduation_rate").text(data);
+                $("#recreation_year").text("2016");
+                $("#public_park_count").text("???");
+                $("#existing_house_year").text("2016");
+                $("#for_sale_count").text("???");
+                $("#incident_year").text("2016");
+                $("#incident_count").text("???");
+            });
+        </script>
     </div>
-
-    <style>
-        .count-label {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 12px;
-            font-weight: normal;
-        }
-
-        .count {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 40px;
-            font-weight: bold;
-        }
-    </style>   
-    <script>
-        $("#school_year").text("2016");
-        $("#graduation_rate").text("85%");
-        $("#recreation_year").text("2016");
-        $("#public_park_count").text("5,120");
-        $("#existing_house_year").text("2016");
-        $("#for_sale_count").text("120,000");
-        $("#incident_year").text("2016");
-        $("#incident_count").text("150,000");
-    </script>
 
 </body>

@@ -12,11 +12,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/crime.css">
-    <link rel="stylesheet" href="/css/education.css">
-    <link rel="stylesheet" href="/css/dashboard.css">
-    <link rel="stylesheet" href="/css/housing.css">
-    <link rel="stylesheet" href="/css/area.css">
   
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -82,7 +77,36 @@
     <!-- content box -->
     <div id="page-content" class="box"></div>
 
-    <script src="/js/index.js" type="text/javascript"></script> 
+    <script>
+        $(document).ready(function() {
+
+            // autoload dashboard at startup
+            var dashboard_fragment = "/templates/page-dashboard2.html#page-content";
+            $("#page-content").load(dashboard_fragment, function() {
+                $("#school_year").text("2016");
+                $("#graduation_rate").text("85%");
+                $("#recreation_year").text("2016");
+                $("#public_park_count").text("5,120");
+                $("#existing_house_year").text("2016");
+                $("#for_sale_count").text("120,000");
+                $("#incident_year").text("2016");
+                $("#incident_count").text("150,000");
+            });
+
+            // load page in the page-content div when clicked
+            $(".page-link").click(function(e) {
+                e.preventDefault();
+                $("#page-content").load($(this).attr('href'));
+            });
+        });
+
+        function popUpWindow(URL, windowName, windowWidth, windowHeight) {
+            var centerLeft = (screen.width/2)-(windowWidth/2);
+            var centerTop = (screen.height/2)-(windowHeight/2);
+            var windowFeatures = 'toolbar=no, location=no, directories=no, status=no, menubar=no, titlebar=no, scrollbars=no, resizable=yes, ';
+            return window.open(URL, windowName, windowFeatures +' width='+ windowWidth +', height='+ windowHeight +', top='+ centerTop +', left='+ centerLeft);
+        }
+    </script>
 
 </body>
 

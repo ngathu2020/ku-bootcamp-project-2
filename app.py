@@ -2,6 +2,8 @@ from flask import Flask, render_template, jsonify, redirect, request, send_from_
 from lxml import html
 from bs4 import BeautifulSoup as bs
 from bson.json_util import dumps
+from re import sub
+from decimal import Decimal
 
 import requests
 import json
@@ -11,7 +13,6 @@ import numpy as np
 import csv
 import os
 import io
-
 
 app = Flask(__name__)
 
@@ -50,34 +51,67 @@ def get_zillow_data(city):
     info = soup.find_all('span', {'class': 'zsg-photo-card-info'})
     address = soup.find_all('span', {'itemprop': 'address'})
         
-    listing_str = ""
-    count = 0
+    price_listing = []
+    bedroom_listing = []
+    bathroom_listing = []
+    sqft_listing = []
+
     for index, value in enumerate(price):
-        # build the row
-        each_listing = {"price": value.text, "info": info[index].text, "address": address[index].text}
-        # write each row to the Mongo db        
+
+        
+        try:
+            price_value = int('{:.0f}'.format(Decimal(sub(r'[^\d.]', '', value.text))))
+            print("price = ", price_value)
+            price_listing.append(price_value)
+        except:
+            print("price data error")
+            price_value = 0
+
+        info_value = info[index].text.split(" ")
+        print(len(info_value))
+
+        try:
+            bedroom_count = int(float(info_value[0].split(" ")[0]))  
+            print("bed rooms = ", bedroom_count)
+            bedroom_listing.append(bedroom_count)
+        except:
+            print("bedroom data error")
+            bedroom_count = 0
+
+        try:
+            bathroom_count = int(info_value[3].split(" ")[0])  
+            print("bath rooms = ", bathroom_count)
+            bathroom_listing.append(bathroom_count)
+        except:
+            print("bathroom data error")
+            bathroom_count = 0
+
+        try:
+            sqft_count = int('{:.0f}'.format(Decimal(sub(r'[^\d.]', '', info_value[6].split(" ")[0]))))  
+            print("sqft = ", sqft_count)
+            sqft_listing.append(sqft_count)
+        except:
+            print("sqft data error")
+            sqft_count = 0
+
+        each_listing = {"price": price_value, "bedroom": bedroom_count, "bathroom": bathroom_count, "sqft": sqft_count, "address": address[index].text}
         collection.insert_one(each_listing)
-        # accumulate listings received
-        print(type(each_listing))
 
-        to_str = ''.join('{}{}'.format(key, val) for key, val in each_listing.items())     
-        listing_str = listing_str + to_str
-        
-        # accumulate listing count
-        count = count + 1
 
-        print(each_listing)
-        
-    #display number of listing
-    print(count)
-    print(listing_str)
+    data = [{
+        "x": price_listing,
+        "y": sqft_listing,
+        "type": "scatter"
+    }]
 
-    return listing_str
+    return jsonify(data)
+
+
 
 
 # calculate KC graduation rate in 2016
 def get_graduation_rate():
-    csv_path = os.path.join("data", "KCDataSet.csv")
+    csv_path = os.path.join("data", "KCDataSet3.csv")
     kcdata = pd.read_csv(csv_path)
     kcdata = kcdata.replace(0, np.NaN)
     graduation_rate = kcdata["Graduation Rate"].mean()
@@ -98,30 +132,12 @@ def dashboard_data():
     return get_graduation_rate()
 
 
-#get new zillow data
+# build data for the plotly line chart from Zillow housing data
 @app.route("/zillow")
 def get_zillow():
     city = "kansas-city_rb"
     return get_zillow_data(city)
 
-
-# build data for the plotly line chart of Zillow housing data
-@app.route("/line")
-def get_line_data():
-    data = {
-        x: [1, 2, 3, 4],
-        y: [10, 15, 13, 17]
-    }
-
-    # var line2 = {
-    #     x: [1, 2, 3, 4],
-    #     y: [16, 5, 11, 9],
-    #     type: 'scatter'
-    # }
-
-    # var data = [line1, line2]
-
-    return jsonify(data)
 
 
 @app.route('/<path:path>')

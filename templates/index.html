@@ -40,15 +40,15 @@
       </div>
       <div class="second-nav">
         <ul class="nav navbar-nav">
-          <li><a class="page-link" href="/templates/page-dashboard-25.html#page-content">Dashboard</a></li>
+          <li><a class="page-link" href="/templates/page-dashboard-26.html#page-content">Dashboard</a></li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Area Information<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <!-- <li><a class="page-link" href="/templates/page-area-city.html#page-content">City</a></li>
               <li><a class="page-link" href="/templates/page-area-county.html#page-content">County</a></li> -->
-              <li><a class="page-link" href="/templates/page-area-pop-23.html#page-content">Population</a></li>
-              <li><a class="page-link" href="/templates/page-area-park-23.html#page-content">Parks</a></li>
-              <li><a class="page-link" href="/templates/page-area-recreation-23.html#page-content">Recreation</a></li>
+              <li><a class="page-link" href="/templates/page-area-pop-26.html#page-content">Population</a></li>
+              <li><a class="page-link" href="/templates/page-area-park-26.html#page-content">Parks</a></li>
+              <li><a class="page-link" href="/templates/page-area-recreation-26.html#page-content">Recreation</a></li>
             </ul>
           </li>
 
@@ -66,7 +66,7 @@
             </ul>
           </li>
 
-          <li><a class="page-link" href="/templates/page-housing-24.html#page-content">Housing</a></li>
+          <li><a class="page-link" href="/templates/page-housing-26.html#page-content">Housing</a></li>
 
         </ul>
       </div>
@@ -81,17 +81,8 @@
             // autoload dashboard at startup
             d3.json("/dashboard", function(data) {
                 console.log("grad rate " + data)
-                var dashboard_fragment = "/templates/page-dashboard-25.html#page-content";
-                $("#page-content").load(dashboard_fragment, function() {
-                    $("#school_year").text("2016");
-                    $("#graduation_rate").text(data);
-                    $("#recreation_year").text("2016");
-                    $("#public_park_count").text("???");
-                    $("#existing_house_year").text("2016");
-                    $("#for_sale_count").text("???");
-                    $("#incident_year").text("2016");
-                    $("#incident_count").text("???");
-                });
+                var dashboard_fragment = "/templates/page-dashboard-26.html#page-content";
+                $("#page-content").load(dashboard_fragment);
             });
 
             // load page in the page-content div when clicked

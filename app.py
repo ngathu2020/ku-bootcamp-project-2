@@ -55,6 +55,7 @@ def get_zillow_data(city):
     bedroom_listing = []
     bathroom_listing = []
     sqft_listing = []
+    description_listing = []
 
     for index, value in enumerate(price):
 
@@ -94,13 +95,25 @@ def get_zillow_data(city):
             print("sqft data error")
             sqft_count = 0
 
+        description_listing.append(str(bedroom_count) + " bds " + str(bathroom_count) + " ba: " + address[index].text)
+
         each_listing = {"price": price_value, "bedroom": bedroom_count, "bathroom": bathroom_count, "sqft": sqft_count, "address": address[index].text}
         collection.insert_one(each_listing)
 
 
-    data = [{
+    data  = [{
         "x": price_listing,
         "y": sqft_listing,
+        "mode": "markers",
+        "text": description_listing,
+        "marker": {
+            "color": "rgb(219, 64, 82)",
+            "size": 20,
+            "line": {
+                "color": "white",
+                "width": 0.5
+            }
+        },
         "type": "scatter"
     }]
 
@@ -132,11 +145,12 @@ def dashboard_data():
     return get_graduation_rate()
 
 
-# build data for the plotly line chart from Zillow housing data
+# build data for the plotly chart from Zillow housing data
 @app.route("/zillow")
-def get_zillow():
+def get_data():
     city = "kansas-city_rb"
     return get_zillow_data(city)
+
 
 
 

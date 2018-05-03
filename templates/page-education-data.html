@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>School Information</title>
+
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js" type="text/javascript" charset="utf8"></script>
+
+</head>
+
+<body>
+    <!-- content box -->
+    <div id="page-content" class="box">
+
+      <div class="headline">
+        <h4>Kansas City Area School Listing</h4>
+      </div>
+        
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped table-inverse" id="myTable">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>School District</th>
+                <th>County</th>
+                <th>City</th>
+                <th>ZIP</th>
+                <th>Locale</th>
+                <th>Student Teacher Ratio</th>
+                <th>School Type</th>
+                <th>Graduation Rate</th>
+              </tr>
+            </thead>
+            <tbody id="myTableBody"></tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <style>
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tbody>tr:nth-child(even) {
+            background-color: #f2f2f2 !important
+        }
+
+        tbody>tr:nth-child(odd) {
+            background-color: #fff !important
+        }
+        svg {
+            font: 10px sans-serif;
+            shape-rendering: crispEdges;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+        }
+
+        path.domain {
+            stroke: none;
+        }
+
+        .y .tick line {
+            stroke: #ddd;
+        }
+        .toolTip {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            background: none repeat scroll 0 0 white;
+            border: 0 none;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: -3px 3px 15px #888888;
+            color: black;
+            font: 12px sans-serif;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .embed-container {
+            position: relative;
+            padding-bottom: 80%;
+            height: 0;
+            max-width: 100%;
+        }
+
+        .embed-container iframe,
+        .embed-container object,
+        .embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        small {
+            position: absolute;
+            z-index: 40;
+            bottom: 0;
+            margin-bottom: -15px;
+        }
+
+        .panel-body {
+            text-align: center
+        }    
+    </style>
+    <script>
+        var $tbody = document.querySelector("#myTableBody");
+
+        d3.csv("/data/KCDataSet3.csv", function (error, MoDataSet) {
+            if (error) throw error;
+            console.log(MoDataSet);
+            console.log([error])
+        
+
+            var filteredMissouridata = MoDataSet;
+            console.log(MoDataSet)
+
+            function renderTable() {
+                $tbody.innerHTML = "";
+
+                for (var i = 0; i < filteredMissouridata.length; i++) {
+
+                    var school = filteredMissouridata[i];
+                    var fields = Object.keys(school);
+
+                    var $row = $tbody.insertRow(i);
+                    for (var j = 0; j < fields.length; j++) {
+
+                        var field = fields[j];
+                        var $cell = $row.insertCell(j);
+                        $cell.innerText = school[field];
+                    }
+                }
+                
+                $('table').ddTableFilter();
+            }
+            renderTable()
+        })
+    </script>
+
+</body>
+
+</html>

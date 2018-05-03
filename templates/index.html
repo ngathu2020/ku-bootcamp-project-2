@@ -40,33 +40,31 @@
       </div>
       <div class="second-nav">
         <ul class="nav navbar-nav">
-          <li><a class="page-link" href="/templates/page-dashboard-26.html#page-content">Dashboard</a></li>
+          <li><a class="page-link" href="/templates/page-dashboard.html#page-content">Dashboard</a></li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Area Information<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <!-- <li><a class="page-link" href="/templates/page-area-city.html#page-content">City</a></li>
-              <li><a class="page-link" href="/templates/page-area-county.html#page-content">County</a></li> -->
-              <li><a class="page-link" href="/templates/page-area-pop-26.html#page-content">Population</a></li>
-              <li><a class="page-link" href="/templates/page-area-park-26.html#page-content">Parks</a></li>
-              <li><a class="page-link" href="/templates/page-area-recreation-26.html#page-content">Recreation</a></li>
+              <li><a class="page-link" href="/templates/page-area-pop.html#page-content">Population</a></li>
+              <li><a class="page-link" href="/templates/page-area-park.html#page-content">Parks</a></li>
+              <li><a class="page-link" href="/templates/page-area-recreation.html#page-content">Recreation</a></li>
             </ul>
           </li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Education<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a class="page-link" href="/templates/page-education-map-23.html#page-content">School Map</a></li>
-              <li><a class="page-link" href="/templates/page-education-data-23.html#page-content">School Data</a></li>
+              <li><a class="page-link" href="/templates/page-education-map.html#page-content">School Map</a></li>
+              <li><a class="page-link" href="/templates/page-education-data.html#page-content">School Data</a></li>
             </ul>
           </li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Crime<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a class="page-link" href="/templates/page-crime-kc-23.html#page-content">Kansas City</a></li>
-              <li><a class="page-link" href="/templates/page-crime-jc-23.html#page-content">Johnson County</a></li>
+              <li><a class="page-link" href="/templates/page-crime-kc.html#page-content">Kansas City</a></li>
+              <li><a class="page-link" href="/templates/page-crime-jc.html#page-content">Johnson County</a></li>
             </ul>
           </li>
 
-          <li><a class="page-link" href="/templates/page-housing-26.html#page-content">Housing</a></li>
+          <li><a class="page-link" href="/templates/page-housing.html#page-content">Housing</a></li>
 
         </ul>
       </div>
@@ -81,7 +79,7 @@
             // autoload dashboard at startup
             d3.json("/dashboard", function(data) {
                 console.log("grad rate " + data)
-                var dashboard_fragment = "/templates/page-dashboard-26.html#page-content";
+                var dashboard_fragment = "/templates/page-dashboard.html#page-content";
                 $("#page-content").load(dashboard_fragment);
             });
 

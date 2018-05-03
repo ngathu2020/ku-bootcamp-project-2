@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Heat Map of Kansas City</title>
+</head>
+  
+<body>
+
+    <div id="page-content" class="box">
+
+        <div class="headline">
+            <h4>Kansas City Police Department Crime Data</h4>
+        </div>
+                
+        <article>
+            The data shown in the heatmap below comes from 
+            OpenData KC's KCPD Crime Data 2016 data set. 
+            It is for the 2016 calendar year and includes
+            approx. 127,000 incidents.  It includes all crimes 
+            against persons, property or society, but does 
+            not include traffic violations.
+        </article>
+        <br>
+        <div id="map"></div>
+    </div>
+
+    <style>
+        #map, body, html, .page-content {
+            height: 100% !important;
+        } 
+    </style>
+    
+    <script>
+        document.getElementById("map").innerHTML = "";
+
+        var kcMap = L.map('map', {
+            center: [39.0997, -94.5786],
+            zoom: 11
+        });
+
+        let kcmapboxUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+        let kcaccessToken = 'pk.eyJ1IjoicmluY2tkIiwiYSI6ImNpamc3ODR1aDAxMmx0c2x0Zm9lc3E1OTAifQ.pIkP7PdJMrR5TBIp93Dlbg';
+        let kcLayer = L.tileLayer(kcmapboxUrl, {id: 'mapbox.streets-satellite', maxZoom: 20, accessToken: kcaccessToken});
+        kcLayer.addTo(kcMap);
+
+        var kcurl = "https://data.kcmo.org/resource/c6e8-258d.geojson"
+
+        d3.json(kcurl, function(response){
+
+            console.log(response);
+
+            var heatArray = [];
+
+            for (var i = 0; i < response.features.length; i++) {
+                heatArray.push([response.features[i].properties['latitude'], response.features[i].properties['longitude'], 100.0])
+            }
+
+            var heat = L.heatLayer(heatArray, {
+                radius: 20,
+                blur: 35
+            }).addTo(kcMap)
+        });
+    </script>
+
+</body>
+</html>

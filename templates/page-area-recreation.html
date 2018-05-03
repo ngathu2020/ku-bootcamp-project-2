@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Recreation Types</title>
+</head>
+  
+<body>
+
+    <div id="page-content" class="box">
+        <div class="headline">
+            <h4>Kansas City Recreation</h4>
+        </div>
+                
+        <article>
+                Kansas City is a multi-county metropolitan area that is located on 
+                the Kansas and Missouri border. It is the second largest metropolitan 
+                area in the state after St. Louis. Johnson County, Kansas makes up the 
+                southwestern region of the metro and includes Overland Park, Lenexa, 
+                Olathe, and Shawnee. Wyandotte County, is on the western side of the 
+                metro and contains Kansas City, Kansas. Leavenworth County is just 
+                outside of the Kansas City area but is still included in the metro. 
+                Kansas City, Missouri is in the center of the metropolitan.
+        </article>
+        <br>
+        <div id="map"></div>
+    </div>
+
+    <style>
+        #map, body, html, .page-content {
+            height: 100% !important;
+        } 
+    </style>
+    <script>
+        document.getElementById("map").innerHTML = "";
+
+        // Creating map object
+        var recmap = L.map("map", {
+            center: [39.0997, -94.5786],
+            zoom: 11
+        });
+
+        // Adding tile layer
+        let recmapboxUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+        let recaccessToken = 'pk.eyJ1IjoicmluY2tkIiwiYSI6ImNpamc3ODR1aDAxMmx0c2x0Zm9lc3E1OTAifQ.pIkP7PdJMrR5TBIp93Dlbg';
+        let recLayer = L.tileLayer(recmapboxUrl, {id: 'mapbox.streets-satellite', maxZoom: 20, accessToken: recaccessToken});
+        recLayer.addTo(recmap);
+
+        var reclink = "https://cdn.rawgit.com/jpham1991/dataset_kc/d01eb5e7/Kansas%20City%20Missouri%20Parks%20and%20Boulevards%20Map.geojson";
+
+
+
+        function chooseColor(parktype) {
+            switch (parktype) {
+            case "County, Major":
+                return "yellow";
+            case "Community":
+                return "red";
+            case "Regional":
+                return "orange";
+            case "Golf, Public":
+                return "green";
+            case "Golf, Private":
+                return "purple";
+            case "Neighborhood":
+                return "green";
+            case "Parkway/Boulevard":
+                return "blue";
+            case "Greenway":
+                return "white";
+            default:
+                return "black";
+            }
+        }
+
+        // Grabbing our GeoJSON data..
+        d3.json(reclink, function(data) {
+            console.log(data);
+            // Creating a geoJSON layer with the retrieved data
+            L.geoJson(data, {
+            style: function(feature) {
+                return {
+                color: "white",
+                fillColor: chooseColor(feature.properties.parktype),
+                fillOpacity: 0.5,
+                weight: 1.5
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                // Set mouse events to change map styling
+                layer.on({
+                // When a user's mouse touches a map feature, the mouseover event calls this function, that feature's opacity changes to 90% so that it stands out
+                mouseover: function(event) {
+                    layer = event.target;
+                    layer.setStyle({
+                    fillOpacity: 0.9
+                    });
+                },
+                // When the cursor no longer hovers over a map feature - when the mouseout event occurs - the feature's opacity reverts back to 50%
+                mouseout: function(event) {
+                    layer = event.target;
+                    layer.setStyle({
+                    fillOpacity: 0.5
+                    });
+                },
+                // When a feature (neighborhood) is clicked, it is enlarged to fit the screen
+                click: function(event) {
+                    recmap.fitBounds(event.target.getBounds());
+                }
+                });
+                // Giving each feature a pop-up with information pertinent to it
+                layer.bindPopup("<h1>" + feature.properties.parkname + "</h1> <hr> <h3>Area Type: " + feature.properties.parktype + "</h3>");
+
+            }
+            }).addTo(recmap);
+        });
+    </script>
+
+</body>
+</html>
